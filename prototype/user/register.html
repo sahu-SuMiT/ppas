@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPAS - Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="app-header">
+            <img src="images/ppas_logo1.png" alt="PPAS Logo" class="app-logo" onclick="window.location.href='auth.html'" style="cursor: pointer;">
+            <h1 class="app-title">Register</h1>
+            <p class="app-subtitle">Create New Account</p>
+        </div>
+        
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="student id" id="studentId" required>
+            </div>
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="full name" id="fullName" required>
+            </div>
+            <div class="input-group">
+                <select class="input-field" id="department" required>
+                    <option value="">select department</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="IT">IT</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <select class="input-field" id="semester" required>
+                    <option value="">select semester</option>
+                    <option value="1">1st Semester</option>
+                    <option value="2">2nd Semester</option>
+                    <option value="3">3rd Semester</option>
+                    <option value="4">4th Semester</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <input type="password" class="input-field" placeholder="password" id="password" required>
+            </div>
+            <div class="input-group">
+                <input type="password" class="input-field" placeholder="confirm password" id="confirmPassword" required>
+            </div>
+            <button type="submit" class="auth-button register-button">register</button>
+        </form>
+
+        <div class="login-link">
+            <p>Already have an account? <a href="auth.html">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const studentId = document.getElementById('studentId').value;
+            const fullName = document.getElementById('fullName').value;
+            const department = document.getElementById('department').value;
+            const semester = document.getElementById('semester').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Store user data in sessionStorage
+            const userData = {
+                studentId: studentId,
+                fullName: fullName,
+                department: department,
+                semester: semester,
+                password: password
+            };
+
+            // Store user data
+            sessionStorage.setItem('registeredUser', JSON.stringify(userData));
+            sessionStorage.setItem('userId', studentId);
+            sessionStorage.setItem('auth', 'true');
+
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            document.querySelector('form').style.display = 'none';
+
+            // Redirect to home page after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 2000);
+        }
+    </script>
+
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #8Bc7ff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+
+        .input-field::placeholder {
+            color: #000;
+            opacity: 0.7;
+        }
+
+        select.input-field {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+            background-size: 1.2rem;
+            padding-right: 2.5rem;
+            color: #000;
+        }
+
+        select.input-field option {
+            color: #000;
+            background-color: white;
+        }
+
+        select.input-field option:first-child {
+            color: #000;
+            opacity: 0.7;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 0.8rem;
+            background: #d9d9d9;
+            border: none;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #000;
+        }
+
+        .register-button:hover {
+            background: #c4c4c4;
+        }
+
+        .login-link {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #000;
+        }
+
+        .login-link a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</body>
+</html> 
